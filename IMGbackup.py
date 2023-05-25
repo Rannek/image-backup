@@ -5,11 +5,17 @@ from tqdm import tqdm
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
+def count_image_files(path):
+    extensions = {'.png', '.jpg', '.jpeg', '.bmp'}
+    return sum(
+        sum(os.path.splitext(filename)[1].lower() in extensions for filename in files)
+        for _, _, files in os.walk(path)
+    )
+
 def resize_image(input_image_path, output_image_path, size, quality):
     try:
         original_image = Image.open(input_image_path)
         original_size = os.path.getsize(input_image_path)
-        width, height = original_image.size
 
         resized_image = original_image.resize(size)
         if resized_image.mode in ("RGBA", "P"):
@@ -22,14 +28,15 @@ def resize_image(input_image_path, output_image_path, size, quality):
         return 0
 
 def scan_directory(path, resize_percentage, quality):
-    total_files = sum(len(files) for _, _, files in os.walk(path))  # Get total number of files in directory
+    total_files = count_image_files(path)  # Get total number of image files in directory
     processed_files = 0
     total_saved = 0
     progress_bar = tqdm(total=total_files, unit="files")  # Create a progress bar
 
     for foldername, subfolders, filenames in os.walk(path):
         for filename in filenames:
-            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp')):
+            extension = os.path.splitext(filename)[1].lower()
+            if extension in {'.png', '.jpg', '.jpeg', '.bmp'}:
                 original_path = os.path.join(foldername, filename)
                 backup_path = original_path.replace(path, 'backup', 1)
                 backup_dir = os.path.dirname(backup_path)
@@ -53,7 +60,7 @@ def scan_directory(path, resize_percentage, quality):
                     progress_bar.set_description(f"Processed: {processed_files}, Saved: {total_saved / (1024 * 1024):.2f}MB")
                     progress_bar.update()
                 except Exception as e:
-                    print(f"Failed to open or process file {original_path}. Error: {e}")
+                      print(f"Failed to open or process file {original_path}. Error: {e}")
 
     progress_bar.close()
 
