@@ -12,9 +12,9 @@ This Python script helps reduce the disk space used by images. It scans all dire
 
 ## Usage
 
-1. Clone this repository or download the `resize_images.py` script.
+1. Clone this repository or download the `IMGbackup.py` script.
 2. Place the script in the directory where you want to start the scan.
-3. Run the script using Python: `python resize_images.py`.
+3. Run the script using Python: `python IMGbackup.py`.
 
 ## Requirements
 
