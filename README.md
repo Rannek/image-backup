@@ -5,10 +5,15 @@ This Python script helps reduce the disk space used by images. It scans all dire
 ## Features
 
 - Scans all directories and subdirectories from the current directory.
-- Resizes images (PNG, JPG, JPEG, BMP) to save disk space.
+- Resizes images (PNG, JPG, JPEG, BMP) to save disk space. 
 - Creates a backup directory that mirrors the existing directory structure.
 - Skips images that are already small (width <= 1024px, height <= 768px, file size <= 50KB).
 - Handles errors gracefully, ensuring the script continues running even if some images cannot be processed.
+
+## Important Considerations
+
+- The script counts the total number of image files in the directory first, and then walks the directory again to process each image. This is fine for small directories, but for large directories with millions of files, this could take a considerable amount of time before the actual processing begins.
+- The script converts all images, regardless of the original format (PNG, BMP, JPEG), to JPEG. This may lead to loss of quality in certain images, particularly PNGs with transparency, which JPEG does not support.
 
 ## Usage
 
@@ -24,5 +29,6 @@ This script requires Python 3 and the following Python packages:
 - `tqdm` for displaying progress information.
 
 You can install these packages using pip:
+
 ```bash
 pip install pillow tqdm
