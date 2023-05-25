@@ -9,6 +9,9 @@ This Python script helps reduce the disk space used by images. It scans all dire
 - Creates a backup directory that mirrors the existing directory structure.
 - Skips images that are already small (width <= 1024px, height <= 768px, file size <= 50KB).
 - Handles errors gracefully, ensuring the script continues running even if some images cannot be processed.
+- Displays a progress bar indicating the number of processed files and the total disk space saved by reducing image sizes.
+
+![IMGbackup](https://github.com/Rannek/image-backup/assets/13249976/614dc1b3-7e94-43ee-a5a5-cf4c8229a128)
 
 ## Important Considerations
 
